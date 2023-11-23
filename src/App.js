@@ -7,7 +7,6 @@ import Navigation from './pages/Navigation'
 import { useState } from 'react';
 
 function App() {
-
   const [pagina, setPagina] = useState('home')
   const [mostrarLogin, setMostrarLogin] = useState(false);
   const [mostrarInsert, setMostrarInsert] = useState(false);
