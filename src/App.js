@@ -5,6 +5,8 @@ import Insert from './pages/Insert';
 import Login from './pages/Login';
 import Navigation from './pages/Navigation'
 import { useState } from 'react';
+import Busca from './pages/Busca';
+import { SearchProvider } from './search/search';
 
 function App() {
   const [pagina, setPagina] = useState('home')
@@ -21,6 +23,8 @@ function App() {
 
   if (pagina === 'home') {
     conteudo = <Home onPageChange={setPagina} />;
+  } else if (pagina === 'busca') {
+    conteudo = <Busca onPageChange={setPagina} />;
   } else if (pagina === 'insert' && mostrarInsert) {
     conteudo = (
       <>
@@ -42,14 +46,16 @@ function App() {
   }
 
   return (
-    <div className='divPrinc'>
-      <Navigation onPageChange={setPagina} setMostrarLogin={setMostrarLogin} setMostrarInsert={setMostrarInsert} />
-      <main>
-        <div>
-          {conteudo}
-        </div>
-      </main>
-    </div>
+    <SearchProvider>
+      <div className='divPrinc'>
+        <Navigation onPageChange={setPagina} setMostrarLogin={setMostrarLogin} setMostrarInsert={setMostrarInsert} />
+        <main>
+          <div>
+            {conteudo}
+          </div>
+        </main>
+      </div>
+    </SearchProvider>
   )
 }
 

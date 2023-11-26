@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import './css/Navigation.css';
+import { SearchContext } from "../search/search";
 
 const Navigation = ({ onPageChange, setMostrarLogin, setMostrarInsert }) => {
 
@@ -18,6 +19,25 @@ const Navigation = ({ onPageChange, setMostrarLogin, setMostrarInsert }) => {
         onPageChange('insert');
         setMostrarInsert(true);
     };
+
+    const search = useContext(SearchContext)
+    const [input, setInput] = useState('')
+
+    const pesquisar = (event) => {
+        event.preventDefault()
+        if (input.length > 3) {
+            search.search(input).then((data) => {
+                if (data && data.data && data.data.length > 0) {
+                    search.setInfo(data);
+                    localStorage.setItem('myInfo', JSON.stringify(data))
+                    onPageChange('busca');
+                }
+            })
+        } else {
+            setInput('');
+        }
+
+    }
 
     return (
         <div className="divNav">
@@ -40,8 +60,10 @@ const Navigation = ({ onPageChange, setMostrarLogin, setMostrarInsert }) => {
                                 placeholder="Search"
                                 className="me-2"
                                 aria-label="Search"
+                                value={input}
+                                onChange={(event) => setInput(event.target.value)}
                             />
-                            <Button className="botaosearch">Search</Button>
+                            <Button className="botaosearch" type="submit" onClick={pesquisar}>Search</Button>
                         </Form>
                     </Navbar.Collapse>
                 </Container>
