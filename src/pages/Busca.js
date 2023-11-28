@@ -1,53 +1,46 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Col, Row } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import { SearchContext } from "../search/search";
-import { Card, Button } from 'react-bootstrap';
-import { useContext } from "react";
+import './css/Busca.css'
 
 const Busca = () => {
-    
-}
+    const search = useContext(SearchContext)
+    const [dataExiste, setDataExiste] = useState(true)
+    const data = search.animesinfo;
 
+    useEffect(() => {
+        if (search.animesinfo === undefined || search.animesinfo.length === 0) {
+            try {
+                // Tentando buscar os dados do localStorage e atualizar o estado animesinfo
+                search.setInfo(JSON.parse(sessionStorage.getItem('myInfo')))
+                setDataExiste(true)
+            } catch (error) {
+                // Se ocorrer um erro (por exemplo, se os dados não existirem no localStorage), atualiza o estado dataExiste para false
+                console.log(error)
+                setDataExiste(false)
+            }
+        }
+    }, [search]);
 
-/*
-const Busca = ({ data }) => {
-    const search = useContext(SearchContext);
-
-    const Cartao = ({ anime }) => {
-
-        const titulo = anime.title.length > 49
-            ? `${anime.title.substring(0, 48)}...`
-            : anime.title;
-        const urlImg = anime.main_picture.medium;
-
-        return (
-            <div className="divCards">
-                <Card className="my-card">
-                    <Card.Img variant="top" className="imgCard" src={urlImg} alt={titulo} style={{ maxHeight: 300 }} />
+    return (
+        <div className='Container'>
+            {dataExiste && data &&
+                <Card style={{ width: '18rem' }}>
                     <Card.Body>
-                        <Card.Title>{titulo}</Card.Title>
+                        <Card.Title>{data.title}</Card.Title>
                         <Card.Text>
+                            Score: {data.score}
+                        </Card.Text>
+                        <Card.Text>
+                            N° Episódios: {data.episodes}
                         </Card.Text>
                     </Card.Body>
                 </Card>
-            </div>
-        );
-    };
-
-    return (
-        <div className="animeList">
-            <div className='cardlist'>
-                <Row xs={5} className="g-4">
-                    {data.data.map((anime, idx) => (
-                        <Col key={idx}>
-                            <Cartao anime={anime.node} />
-                        </Col>
-                    ))}
-                </Row>
-            </div>
+            }
+            {!dataExiste && <p>Nenhum dado encontrado.</p>}
         </div>
     );
-}
-*/
+};
+
 export default Busca;

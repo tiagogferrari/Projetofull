@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -7,28 +7,63 @@ import './css/Login.css';
 
 
 const Login = ({ onPageChange }) => {
+
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+
     const handleClose = () => {
         onPageChange('home');
     };
+
+    const login = (username, password) => {
+        return fetch('http://localhost:3000/user/user', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Erro no servidor');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                sessionStorage.setItem('token', data.token); 
+                onPageChange('home');
+                console.log('login concluido')
+            })
+            .catch((error) => {
+                setUsername("");
+                setPassword("");
+                setErrorMessage("Usuário ou senha incorreto(s)");
+            });
+    };
+
+    const handleLogin = (event) => {
+        event.preventDefault();
+        login(username, password);
+    };
+
     return (
-        <Form>
+        <Form onSubmit={handleLogin}>
             <div className="text-end">
                 <CloseButton className="closebt" onClick={handleClose} />
             </div>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Nome de usuário</Form.Label>
-                <Form.Control type="text" placeholder="nome de usuário" />
+                <Form.Control type="text" placeholder="nome de usuário" value={username} onChange={e => setUsername(e.target.value)} />
                 <Form.Text className="text-muted">
                     Seus dados estão seguro conosco!
                 </Form.Text>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Senha</Form.Label>
-                <Form.Control type="password" placeholder="Senha" />
+                <Form.Control type="password" placeholder="Senha" value={password} onChange={e => setPassword(e.target.value)} />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="Check me out" />
-            </Form.Group>
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
             <Button variant="primary" type="submit" className="botaoLogin">
                 Login
             </Button>

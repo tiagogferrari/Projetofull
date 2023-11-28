@@ -27,16 +27,17 @@ const Navigation = ({ onPageChange, setMostrarLogin, setMostrarInsert }) => {
         event.preventDefault()
         if (input.length > 3) {
             search.search(input).then((data) => {
-                if (data && data.data && data.data.length > 0) {
+                if (data) {
                     search.setInfo(data);
-                    localStorage.setItem('myInfo', JSON.stringify(data))
+                    sessionStorage.setItem('myInfo', JSON.stringify(data))
                     onPageChange('busca');
+                } else {
+                    setInput('')
                 }
             })
         } else {
             setInput('');
         }
-
     }
 
     return (
@@ -51,8 +52,8 @@ const Navigation = ({ onPageChange, setMostrarLogin, setMostrarInsert }) => {
                             style={{ maxHeight: '100px' }}
                             navbarScroll
                         >
-                            <Navbar.Brand href="#" onClick={() => handleLoginClick({ onPageChange, setMostrarLogin })}>Login</Navbar.Brand>
-                            <Navbar.Brand href="#" onClick={() => handleInsertClick({ onPageChange, setMostrarInsert })}>Insert</Navbar.Brand>
+                            <Navbar.Brand href="#" onClick={handleLoginClick}>Login</Navbar.Brand>
+                            <Navbar.Brand href="#" onClick={handleInsertClick}>Insert</Navbar.Brand>
                         </Nav>
                         <Form className="d-flex" id="placeh">
                             <Form.Control
