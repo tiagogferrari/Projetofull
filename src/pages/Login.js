@@ -31,7 +31,7 @@ const Login = ({ onPageChange }) => {
                 return response.json();
             })
             .then((data) => {
-                sessionStorage.setItem('token', data.token); 
+                localStorage.setItem('token', data.token); 
                 onPageChange('home');
                 console.log('login concluido')
             })

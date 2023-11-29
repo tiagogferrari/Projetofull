@@ -12,6 +12,8 @@ export const SearchProvider = ({ children }) => {
         setInfoAnime(data)
     }
 
+    const token = localStorage.getItem('token')
+
     //Cria uma função para buscar dados na API
     const search = (searchText) => {
         return fetch(`http://localhost:3000/anime/anime/${encodeURIComponent(searchText)}`,
@@ -19,10 +21,16 @@ export const SearchProvider = ({ children }) => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
                 }
             }
-        ).then((response) => response.json())
-
+        ).then((response) => {
+            if (response.status === 401) {
+                console.log('uai')
+            } else {
+                return response.json();
+            }
+        })
             .catch((error) => {
                 console.error('Erro na requisição:', error);
             });

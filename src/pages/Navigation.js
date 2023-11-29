@@ -10,26 +10,37 @@ import { SearchContext } from "../search/search";
 
 const Navigation = ({ onPageChange, setMostrarLogin, setMostrarInsert }) => {
 
+
+
+    const token = localStorage.getItem('token')
+    const search = useContext(SearchContext)
+    const [input, setInput] = useState('')
+
     const handleLoginClick = () => {
         onPageChange('login');
         setMostrarLogin(true);
     };
 
     const handleInsertClick = () => {
-        onPageChange('insert');
-        setMostrarInsert(true);
-    };
+        if (!token) {
+            handleLoginClick()
+        } else {
+            onPageChange('insert');
+            setMostrarInsert(true);
+        }
 
-    const search = useContext(SearchContext)
-    const [input, setInput] = useState('')
+    };
 
     const pesquisar = (event) => {
         event.preventDefault()
+        if (!token) {
+            handleLoginClick()
+        }
         if (input.length > 3) {
             search.search(input).then((data) => {
                 if (data) {
                     search.setInfo(data);
-                    sessionStorage.setItem('myInfo', JSON.stringify(data))
+                    localStorage.setItem('myInfo', JSON.stringify(data))
                     onPageChange('busca');
                 } else {
                     setInput('')

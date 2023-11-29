@@ -13,15 +13,19 @@ const Insert = ({ onPageChange }) => {
     const [episodes, setEpisodes] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
+    const token = localStorage.getItem('token')
+
     const handleClose = () => {
         onPageChange('home');
     };
 
     const insert = (title, score, episodes) => {
+
         return fetch('http://localhost:3000/anime/anime', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
             },
             body: JSON.stringify({ title, score, episodes })
         })

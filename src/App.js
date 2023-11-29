@@ -46,7 +46,7 @@ function App() {
   }
 
   return (
-    <SearchProvider>
+    <SearchProvider onPageChange={setPagina}>
       <div className='divPrinc'>
         <Navigation onPageChange={setPagina} setMostrarLogin={setMostrarLogin} setMostrarInsert={setMostrarInsert} />
         <main>

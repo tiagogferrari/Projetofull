@@ -13,7 +13,7 @@ const Busca = () => {
         if (search.animesinfo === undefined || search.animesinfo.length === 0) {
             try {
                 // Tentando buscar os dados do localStorage e atualizar o estado animesinfo
-                search.setInfo(JSON.parse(sessionStorage.getItem('myInfo')))
+                search.setInfo(JSON.parse(localStorage.getItem('myInfo')))
                 setDataExiste(true)
             } catch (error) {
                 // Se ocorrer um erro (por exemplo, se os dados não existirem no localStorage), atualiza o estado dataExiste para false
