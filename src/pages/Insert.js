@@ -36,15 +36,6 @@ const Insert = ({ onPageChange }) => {
                 return response.json();
             })
             .then((data) => {
-                /* Conectar ao WebSocket
-                const ws = new WebSocket('ws://localhost:3000');
-                ws.onmessage = (event) => {
-                    console.log('Mensagem recebida: ' + event.data);
-                };
-                ws.onerror = (error) => {
-                    console.log('Erro no WebSocket:', error);
-                };
-                */
                 onPageChange('home');
             })
             .catch((error) => {

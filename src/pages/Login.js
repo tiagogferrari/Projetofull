@@ -34,7 +34,11 @@ const Login = ({ onPageChange }) => {
                 onPageChange('home');
                 console.log('login concluido')
 
-                //conecta c websocket
+                // Conectar ao WebSocket e enviar mensagem
+                const ws = new WebSocket('ws://localhost:3000'); // ajuste a URL conforme necessário
+                ws.onopen = () => {
+                    console.log('Conectado ao servidor WebSocket');
+                };
 
             })
             .catch((error) => {
