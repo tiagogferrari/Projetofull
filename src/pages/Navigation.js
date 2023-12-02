@@ -8,9 +8,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import './css/Navigation.css';
 import { SearchContext } from "../search/search";
 
+
 const Navigation = ({ onPageChange, setMostrarLogin, setMostrarInsert }) => {
-
-
 
     const token = localStorage.getItem('token')
     const search = useContext(SearchContext)
@@ -19,6 +18,12 @@ const Navigation = ({ onPageChange, setMostrarLogin, setMostrarInsert }) => {
     const handleLoginClick = () => {
         onPageChange('login');
         setMostrarLogin(true);
+    };
+
+    const handleLogoutClick = () => {
+        localStorage.removeItem('token');
+        onPageChange('login');
+        console.log('logout concluído');
     };
 
     const handleInsertClick = () => {
@@ -63,7 +68,11 @@ const Navigation = ({ onPageChange, setMostrarLogin, setMostrarInsert }) => {
                             style={{ maxHeight: '100px' }}
                             navbarScroll
                         >
-                            <Navbar.Brand href="#" onClick={handleLoginClick}>Login</Navbar.Brand>
+                            {token ? (
+                                <Navbar.Brand href="#" onClick={handleLogoutClick}>Logout</Navbar.Brand>
+                            ) : (
+                                <Navbar.Brand href="#" onClick={handleLoginClick}>Login</Navbar.Brand>
+                            )}
                             <Navbar.Brand href="#" onClick={handleInsertClick}>Insert</Navbar.Brand>
                         </Nav>
                         <Form className="d-flex" id="placeh">
@@ -85,4 +94,3 @@ const Navigation = ({ onPageChange, setMostrarLogin, setMostrarInsert }) => {
 }
 
 export default Navigation
-

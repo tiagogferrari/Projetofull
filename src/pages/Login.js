@@ -5,7 +5,6 @@ import Form from 'react-bootstrap/Form';
 import CloseButton from 'react-bootstrap/CloseButton';
 import './css/Login.css';
 
-
 const Login = ({ onPageChange }) => {
 
     const [username, setUsername] = useState("");
@@ -31,9 +30,12 @@ const Login = ({ onPageChange }) => {
                 return response.json();
             })
             .then((data) => {
-                localStorage.setItem('token', data.token); 
+                localStorage.setItem('token', data.token);
                 onPageChange('home');
                 console.log('login concluido')
+
+                //conecta c websocket
+
             })
             .catch((error) => {
                 setUsername("");
@@ -52,12 +54,10 @@ const Login = ({ onPageChange }) => {
             <div className="text-end">
                 <CloseButton className="closebt" onClick={handleClose} />
             </div>
+            <Form.Label className="title">Entre para buscar ou inserir animes!</Form.Label>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Nome de usuário</Form.Label>
                 <Form.Control type="text" placeholder="nome de usuário" value={username} onChange={e => setUsername(e.target.value)} />
-                <Form.Text className="text-muted">
-                    Seus dados estão seguro conosco!
-                </Form.Text>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Senha</Form.Label>
