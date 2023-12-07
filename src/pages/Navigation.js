@@ -68,24 +68,27 @@ const Navigation = ({ onPageChange, setMostrarLogin, setMostrarInsert }) => {
                             style={{ maxHeight: '100px' }}
                             navbarScroll
                         >
-                            {token ? (
-                                <Navbar.Brand href="#" onClick={handleLogoutClick}>Logout</Navbar.Brand>
-                            ) : (
-                                <Navbar.Brand href="#" onClick={handleLoginClick}>Login</Navbar.Brand>
-                            )}
-                            <Navbar.Brand href="#" onClick={handleInsertClick}>Insert</Navbar.Brand>
+
+                            <Navbar.Brand href="#" onClick={handleInsertClick}>Inserir</Navbar.Brand>
                         </Nav>
                         <Form className="d-flex" id="placeh">
                             <Form.Control
                                 type="search"
-                                placeholder="Search"
+                                placeholder="Buscar"
                                 className="me-2"
                                 aria-label="Search"
                                 value={input}
                                 onChange={(event) => setInput(event.target.value)}
                             />
-                            <Button className="botaosearch" type="submit" onClick={pesquisar}>Search</Button>
+                            <Button className="botaosearch" type="submit" onClick={pesquisar}>Buscar</Button>
                         </Form>
+                        {token ? (
+                            //<Navbar.Brand href="#" onClick={handleLogoutClick}>Logout</Navbar.Brand>
+                            <Button className="botaologout" type="submit" onClick={handleLogoutClick}>Logout</Button>
+                        ) : (
+                            //<Navbar.Brand href="#" onClick={handleLoginClick}>Login</Navbar.Brand>
+                            <Button className="botaologin" type="submit" onClick={handleLoginClick}>Login</Button>
+                        )}
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

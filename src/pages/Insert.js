@@ -5,7 +5,6 @@ import Form from 'react-bootstrap/Form';
 import CloseButton from 'react-bootstrap/CloseButton';
 import './css/Insert.css';
 
-
 const Insert = ({ onPageChange }) => {
 
     const [title, setTitle] = useState("");
@@ -42,7 +41,7 @@ const Insert = ({ onPageChange }) => {
                 setTitle("");
                 setScore("");
                 setEpisodes("");
-                setErrorMessage("Insira dados correto(s)");
+                setErrorMessage("título = 3-20 caracteres*, score = 0-10*, episodes = 1-1100*");
             });
     };
 
