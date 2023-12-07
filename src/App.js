@@ -18,7 +18,7 @@ function App() {
   const fecharPopUp = () => {
     setMostrarLogin(false);
     setMostrarInsert(false);
-    setPagina('home'); // Adicionando isso para retornar à página inicial ao fechar o pop-up
+    setPagina('home');
   };
 
   if (pagina === 'home') {
